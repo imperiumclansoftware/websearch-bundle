@@ -1,0 +1,20 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+    # Chargement des services
+    ICS\WebsearchBundle\Controller\:
+        resource: "../src/Controller"
+        tags: ['controller.services_arguments']
+    ICS\WebsearchBundle\Service\:
+        resource: "../src/Service"
+        tags: ['controller.services_arguments']
+    ICS\WebsearchBundle\Command\:
+        resource: "../src/Command"
+        tags: ['controller.services_arguments']
+    ICS\WebsearchBundle\Twig\:
+        resource: "../src/Twig"
+        tags: ['controller.services_arguments']
+    ICS\WebsearchBundle\Form\:
+        resource: "../src/Form"
+        tags: ['controller.services_arguments']

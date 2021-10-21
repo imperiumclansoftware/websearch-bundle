@@ -1,0 +1,79 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container-fluid my-3">
+        <div class="row">
+            <div class="col-12">
+                <h1>
+                {% if search != null %}
+                    Search "{{ search }}" on Web
+                {% else %}
+                    Search on Web
+                {% endif %}
+                </h1>
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col-12 col-md-6 offset-md-3">
+                <form method="post">
+                    <div class="input-group mb-3">
+                        <input type="search" class="form-control" name="search" value="{{ search|default('') }}" placeholder="What do you search ?"/>
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 offset-md-3">
+                {% for item in results %}
+                    <div class="card my-3">
+                        {% set common %}
+                            <div class="card-body">
+                                <h4 class="card-title"><a href="{{ item.url }}" target="_blank">{{ item.title|raw }}</a></h4>
+                                <p class="card-text">{{ item.description|raw }}</p>
+                            </div>
+                        {% endset %}
+
+                        {% if item.type == 'web' %}
+                            <div class="row g-0">
+                                <div class="col-md-1 text-center p-3">
+                                    <a href="{{ item.sourceUrl }}" target="_blank"><img class="img-fluid" src="{{ item.iconUrl }}"/></a>
+                                </div>
+                                <div class="col-md-11">
+                                    {{ common }}
+                                </div>
+                            </div>
+                        {% elseif item.type == 'image' %}
+                            <div class="row g-0">
+                                <div class="col-md-2">
+                                <img src="{{ item.media }}" class="img-fluid rounded-start" alt="Image de {{ item.title|raw }}">
+                                </div>
+                                <div class="col-md-10">
+                                    {{ common }}
+                                </div>
+                            </div>
+                        {% elseif item.type == 'video' %}
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="ratio ratio-16x9">
+                                        <iframe src="{{ item.media }}" title="{{ item.title|raw }}" allowfullscreen></iframe>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    {{ common }}
+                                    <div class="card-body">
+                                        <div class="card-text float-end">
+                                            <span class="badge bg-info">{{ item.channel }}</span>
+                                            <span class="badge bg-dark">{{ item.source }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
