@@ -75,7 +75,7 @@ class QwantItem
             }
         }
 
-        return null;
+        return new QwantNewsItem($qwantResponseItem);
     }
 
     /**

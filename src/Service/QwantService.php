@@ -1,9 +1,9 @@
 <?php
 namespace ICS\WebsearchBundle\Service;
 
-use ICS\WebsearchBundle\Entity\Generic\WebSearchResult;
 use ICS\WebsearchBundle\Entity\Qwant\Api\QwantResponse;
 use ICS\WebsearchBundle\Entity\Qwant\QwantImageSearchResult;
+use ICS\WebsearchBundle\Entity\Qwant\QwantNewsSearchResult;
 use ICS\WebsearchBundle\Entity\Qwant\QwantVideoSearchResult;
 use ICS\WebsearchBundle\Entity\Qwant\QwantWebSearchResult;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -25,7 +25,7 @@ class QwantService extends WebSearchService
         $results = array_merge($results,$this->searchImages($search,$nbresult));
         $results = array_merge($results,$this->searchVideos($search,$nbresult));
         $results = array_merge($results,$this->searchMusics($search,$nbresult));
-        //$results = array_merge($results,$this->searchNews($search,$nbresult));
+        $results = array_merge($results,$this->searchNews($search,$nbresult));
 
         return $results;
     }
@@ -35,12 +35,12 @@ class QwantService extends WebSearchService
         $results=[];
 
         $response = $this->getClient()->request('GET',$this->apiUrl.'/news?q='.\urlencode(trim($search)).'&count='.$nbresult);
-
+        dump(json_decode($response->getContent()));
         $QwantResponse = new QwantResponse($response->getContent());
-
+        dump($QwantResponse);
         foreach($QwantResponse->getData()->getResult()->getItems() as $item)
         {
-            $results[] = new QwantImageSearchResult($item);
+            $results[] = new QwantNewsSearchResult($item);
         }
 
         return $results;
