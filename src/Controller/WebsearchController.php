@@ -19,7 +19,7 @@ class WebsearchController extends AbstractController
 
         if($search!=null)
         {
-            $searchResults = $service->searchWeb($search);
+            $searchResults = $service->search($search);
         }
 
         return $this->render('@Websearch\index.html.twig',[
