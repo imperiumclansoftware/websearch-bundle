@@ -1,0 +1,19 @@
+<div class="row g-0">
+    <div class="col-md-4">
+        <div class="ratio ratio-16x9">
+            <iframe src="{{ item.media }}" title="{{ item.title|raw }}" allowfullscreen></iframe>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card-body">
+            <h4 class="card-title"><a href="{{ item.url }}" target="_blank">{{ item.title|raw }}</a></h4>
+            <p class="card-text">{{ item.description|raw }}</p>
+        </div>
+        <div class="card-body">
+            <div class="card-text float-end my-3">
+                <span class="badge bg-info">{{ item.channel }}</span>
+                <span class="badge bg-dark">{{ item.source }}</span>
+            </div>
+        </div>
+    </div>
+</div>

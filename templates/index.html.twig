@@ -27,90 +27,14 @@
             <div class="col-12 col-md-6 offset-md-3">
                 {% for item in results %}
                     <div class="card my-3">
-                        {% set common %}
-                            <div class="card-body">
-                                <h4 class="card-title"><a href="{{ item.url }}" target="_blank">{{ item.title|raw }}</a></h4>
-                                <p class="card-text">{{ item.description|raw }}</p>
-                            </div>
-                        {% endset %}
-
                         {% if item.type == 'web' %}
-                            <div class="row g-0">
-                                <div class="col-md-1 text-center p-3">
-                                    <a href="{{ item.sourceUrl }}" target="_blank"><img class="img-fluid" src="{{ item.iconUrl }}"/></a>
-                                </div>
-                                <div class="col-md-11">
-                                    {{ common }}
-                                </div>
-                            </div>
+                            {% include "@Websearch/web.html.twig" with { item: item } %}
                         {% elseif item.type == 'image' %}
-                            <div class="row g-0">
-                                <div class="col-md-2">
-                                <img src="{{ item.media }}" class="img-fluid rounded-start" alt="Image de {{ item.title|raw }}">
-                                </div>
-                                <div class="col-md-10">
-                                    {{ common }}
-                                </div>
-                            </div>
+                            {% include "@Websearch/images.html.twig" with { item: item } %}
                         {% elseif item.type == 'video' %}
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <div class="ratio ratio-16x9">
-                                        <iframe src="{{ item.media }}" title="{{ item.title|raw }}" allowfullscreen></iframe>
-                                    </div>
-                                </div>
-                                <div class="col-md-8">
-                                    {{ common }}
-                                    <div class="card-body">
-                                        <div class="card-text float-end">
-                                            <span class="badge bg-info">{{ item.channel }}</span>
-                                            <span class="badge bg-dark">{{ item.source }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {% include "@Websearch/videos.html.twig" with { item: item } %}
                         {% elseif item.type == 'news' %}
-                            {% set indicators = "" %}
-                            {% set inner = "" %}
-                            {% for media in item.medias %}
-                                {% set indicators %}
-                                    {{ indicators }}
-                                    <button
-                                        type="button"
-                                        data-bs-target="#carouselNews"
-                                        data-bs-slide-to="loop.index"
-                                        class="{% if loop.first %}active{% endif %}"
-                                        aria-current="true"
-                                        aria-label="Slide {{ loop.index }}"></button>
-                                {% endset %}
-                                {% set inner %}
-                                    {{ inner }}
-                                    <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                        <img src="{{ media.pictureBig.url }}" class="d-block w-100">
-                                        <div class="carousel-caption d-none d-md-block">
-                                            <h5><a class="text-light" href="{{ item.url }}" target="__blank">{{item.title}}</a></h5>
-                                            <p>{{ item.shortDescription }}</p>
-                                        </div>
-                                    </div>
-                                {% endset %}
-                            {% endfor %}
-
-                            <div id="carouselNews" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-indicators">
-                                    {{ indicators }}
-                                </div>
-                                <div class="carousel-inner">
-                                    {{ inner }}
-                                </div>
-                                {# <button class="carousel-control-prev" type="button" data-bs-target="#carouselNews" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#carouselNews" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button> #}
-                            </div>
+                            {% include "@Websearch/news.html.twig" with { items: [item], withIndicators: true } %}
                         {% endif %}
                     </div>
                 {% endfor %}

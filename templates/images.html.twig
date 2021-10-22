@@ -1,0 +1,11 @@
+<div class="row g-0">
+    <div class="col-md-2">
+    <img src="{{ item.media }}" class="img-fluid rounded-start" alt="Image de {{ item.title|raw }}">
+    </div>
+    <div class="col-md-10">
+        <div class="card-body">
+            <h4 class="card-title"><a href="{{ item.url }}" target="_blank">{{ item.title|raw }}</a></h4>
+            <p class="card-text">{{ item.description|raw }}</p>
+        </div>
+    </div>
+</div>
