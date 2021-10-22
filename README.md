@@ -11,7 +11,9 @@ of the Composer documentation.
 Open a command console, enter your project directory and execute:
 
 ```console
+
 composer require ics/websearch-bundle
+
 ```
 
 ### Applications that don't use Symfony Flex
@@ -22,7 +24,9 @@ Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
 
 ```console
-$ composer require ics/websearch-bundle
+
+composer require ics/websearch-bundle
+
 ```
 
 #### Step 2: Enable the Bundle
@@ -44,6 +48,7 @@ return [
 Add routes in applications `config/routes.yaml`
 
 ```yaml
+
 # config/routes.yaml
 
 # ...
@@ -189,7 +194,7 @@ websearch_bundle:
 
 Obtain source code.
 
-```bash
+```console
 
 git clone https://github.com/imperiumclansoftware/websearch-bundle.git [sourcePath]
 
