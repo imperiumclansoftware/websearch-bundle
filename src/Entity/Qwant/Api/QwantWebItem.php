@@ -1,4 +1,5 @@
 <?php
+
 namespace ICS\WebsearchBundle\Entity\Qwant\Api;
 
 class QwantWebItem extends QwantItem
@@ -13,10 +14,13 @@ class QwantWebItem extends QwantItem
     {
         parent::__construct($qwantResponseItem);
         $this->favicon = $qwantResponseItem->favicon;
-        $this->source = $qwantResponseItem->source;
-        $this->score = $qwantResponseItem->score;
-        $this->position = $qwantResponseItem->position;
-        $this->type = "web";
+        if (isset($qwantResponseItem->source)) {
+            $this->source = $qwantResponseItem->source;
+        }
+
+        // $this->score = $qwantResponseItem->score;
+        // $this->position = $qwantResponseItem->position;
+        $this->type = QwantItem::TYPE_WEB;
     }
 
     /**
@@ -43,7 +47,7 @@ class QwantWebItem extends QwantItem
         return $this->score;
     }
 
-     /**
+    /**
      * Get the value of position
      */
     public function getPosition()

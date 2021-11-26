@@ -1,4 +1,5 @@
 <?php
+
 namespace ICS\WebsearchBundle\Entity\Qwant\Api;
 
 use DateTime;
@@ -15,7 +16,7 @@ class QwantVideoItem extends QwantItem
     private $thumbnail;
     private $date;
     private $channel;
-    private $isVevo=false;
+    private $isVevo = false;
     private $source;
     private $count;
 
@@ -23,7 +24,7 @@ class QwantVideoItem extends QwantItem
     {
         parent::__construct($qwantResponseItem);
 
-        $this->type = $qwantResponseItem->type;
+        $this->type = QwantItem::TYPE_VIDEO;
         $this->duration = $qwantResponseItem->duration;
         $this->thumbWidth = $qwantResponseItem->thumb_width;
         $this->thumbHeight = $qwantResponseItem->thumb_height;
@@ -36,8 +37,7 @@ class QwantVideoItem extends QwantItem
         $date->setTimestamp($qwantResponseItem->date);
         $this->date = $date;
         $this->channel = $qwantResponseItem->channel;
-        if(property_exists($qwantResponseItem,'is_vevo'))
-        {
+        if (property_exists($qwantResponseItem, 'is_vevo')) {
             $this->isVevo = $qwantResponseItem->is_vevo == 0;
         }
         $this->source = $qwantResponseItem->source;

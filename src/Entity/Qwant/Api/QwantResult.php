@@ -1,4 +1,5 @@
 <?php
+
 namespace ICS\WebsearchBundle\Entity\Qwant\Api;
 
 
@@ -12,24 +13,25 @@ class QwantResult
 
     public function __construct($qwantResponseResult)
     {
-        if(property_exists($qwantResponseResult,'total'))
-        {
-            $this->total = $qwantResponseResult->total;
-            foreach($qwantResponseResult->items as $item)
-            {
+        if (property_exists($qwantResponseResult, 'total')) {
+            if (isset($qwantResponseResult->items->mainline)) {
+                $items = $qwantResponseResult->items->mainline[0]->items;
+            } else {
+                $items = $qwantResponseResult->items;
+            }
+
+            foreach ($items as $item) {
                 $this->items[] = QwantItem::createItemFromResponse($item);
             }
 
-            foreach($qwantResponseResult->filters as $key => $filter)
-            {
+            foreach ($qwantResponseResult->filters as $key => $filter) {
                 $this->filters[$key] = new QwantFilter($filter);
             }
 
             $this->lastPage = $qwantResponseResult->lastPage == "true";
         }
 
-        if(property_exists($qwantResponseResult,'blacklisted'))
-        {
+        if (property_exists($qwantResponseResult, 'blacklisted')) {
             $this->blacklisted = $qwantResponseResult->blacklisted;
         }
     }

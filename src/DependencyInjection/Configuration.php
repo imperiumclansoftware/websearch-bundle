@@ -1,4 +1,5 @@
 <?php
+
 namespace ICS\WebsearchBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -11,11 +12,9 @@ class Configuration implements ConfigurationInterface
     {
 
         $treeBuilder = new TreeBuilder('websearch');
-        //$treeBuilder->getRootNode()->children()
-        //    ->scalarNode('path')->defaultValue('medias')->end()
-        //;
+        $treeBuilder->getRootNode()->children()
+            ->booleanNode('safesearch')->defaultValue(true)->end();
 
         return $treeBuilder;
     }
-
 }

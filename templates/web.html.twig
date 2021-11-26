@@ -1,11 +1,17 @@
 <div class="row g-0">
-    <div class="col-md-1 text-center p-3">
-        <a href="{{ item.sourceUrl }}" target="_blank"><img class="img-fluid" src="{{ item.iconUrl }}"/></a>
-    </div>
-    <div class="col-md-11">
-        <div class="card-body">
-            <h4 class="card-title"><a href="{{ item.url }}" target="_blank">{{ item.title|raw }}</a></h4>
-            <p class="card-text">{{ item.description|raw }}</p>
-        </div>
-    </div>
+	<div class="col-md-1 text-center">
+		{% if item.sourceUrl is defined %}
+			<a href="{{ item.sourceUrl }}" target="_blank">
+				<img class="img-fluid" src="{{ item.iconUrl }}"/>
+			</a>
+		{% endif %}
+	</div>
+	<div class="col-md-11">
+		<div class="card-body">
+			<h4 class="card-title">
+				<a href="{{ item.url }}" target="_blank">{{ item.title|raw }}</a>
+			</h4>
+			<p class="card-text">{{ item.description|raw }}</p>
+		</div>
+	</div>
 </div>

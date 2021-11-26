@@ -1,45 +1,71 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <div class="container-fluid my-3">
-        <div class="row">
-            <div class="col-12">
-                <h1>
-                {% if search != null %}
-                    Search "{{ search }}" on Web
-                {% else %}
-                    Search on Web
-                {% endif %}
-                </h1>
-            </div>
-        </div>
-        <div class="row my-3">
-            <div class="col-12 col-md-6 offset-md-3">
-                <form method="post">
-                    <div class="input-group mb-3">
-                        <input type="search" class="form-control" name="search" value="{{ search|default('') }}" placeholder="What do you search ?"/>
-                        <button type="submit" class="btn btn-primary">Search</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-6 offset-md-3">
-                {% for item in results %}
-                    <div class="card my-3">
-                        {% if item.type == 'web' %}
-                            {% include "@Websearch/web.html.twig" with { item: item } %}
-                        {% elseif item.type == 'image' %}
-                            {% include "@Websearch/images.html.twig" with { item: item } %}
-                        {% elseif item.type == 'video' %}
-                            {% include "@Websearch/videos.html.twig" with { item: item } %}
-                        {% elseif item.type == 'news' %}
-                            {% include "@Websearch/news.html.twig" with { items: [item], withIndicators: true } %}
-                        {% endif %}
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
+	<div class="container-fluid my-3">
+		<div class="row">
+			<div class="col-12">
+				<h1>
+					{% if search != null %}
+						Search "{{ search }}" on Web
+					{% else %}
+						Search on Web
+					{% endif %}
+				</h1>
+			</div>
+		</div>
+		<div class="row my-3">
+			<div class="col-12 col-md-6 offset-md-3">
+				<form class="form-inline" method="post">
+					<div class="input-group mb-3">
+						<label class="input-group-text" for="inputGroupSelect01">Nombre de résultats</label>
+						<select class="form-select" name="nbresult">
+							{% for nb in nbResults %}
+								<option {% if nbResult == nb %} selected {% endif %} value="{{ nb }}=">{{ nb }}</option>
+							{% endfor %}
+						</select>
+						<input type="search" class="form-control" name="search" value="{{ search|default('') }}" placeholder="What do you search ?"/>
+						<button type="submit" class="btn btn-primary">Search</button>
+						<div class="input-group-text">
 
-    </div>
+							<input class="form-check-input mt-0" name="safesearch" type="checkbox" value="1" {% if safesearch %} checked {% endif %} aria-label="Checkbox for safesearch">
+						</div>
+						<div class="input-group-text">
+							<i class="fa fa-lock"></i>
+							Safesearch
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12 col-md-3">
+				<h2 class="card-title">Images</h2>
+				<div class="row row-cols-1 row-cols-md-3 g-4 my-3">
+					{% for item in imageResults %}
+						{% include "@Websearch/images.html.twig" with { item: item } %}
+					{% endfor %}
+				</div>
+			</div>
+			<div class="col-12 col-md-6">
+				<section>
+					<h2 class="">Actualités</h2>
+					{% include "@Websearch/news.html.twig" with { items: newsResults, withIndicators: true,withButtons: true } %}
+				</section>
+				<section>
+					<h2 class="card-title">Sur le Web</h2>
+					{% for item in webResults %}
+						{% include "@Websearch/web.html.twig" with { item: item } %}
+					{% endfor %}
+				</section>
+			</div>
+			<div class="col-12 col-md-3">
+				<h2 class="card-title">Vidéos</h2>
+				<div class="row row-cols-1 g-4 my-3">
+					{% for item in videoResults %}
+						{% include "@Websearch/videos.html.twig" with { item: item } %}
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

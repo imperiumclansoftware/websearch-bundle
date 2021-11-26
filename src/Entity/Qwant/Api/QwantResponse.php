@@ -1,4 +1,5 @@
 <?php
+
 namespace ICS\WebsearchBundle\Entity\Qwant\Api;
 
 class QwantResponse
@@ -10,8 +11,7 @@ class QwantResponse
     {
         $objectResult = json_decode($webResult);
         $this->status = $objectResult->status;
-        if($this->status == 'success')
-        {
+        if ($this->status == 'success') {
             $this->data = new QwantResponseData($objectResult->data);
         }
     }

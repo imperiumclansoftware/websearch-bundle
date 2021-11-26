@@ -14,7 +14,9 @@ class QwantNewsPicture
         $this->url = $qwantNewsPicture->url;
         $this->width = $qwantNewsPicture->width;
         $this->height = $qwantNewsPicture->height;
-        $this->type = $qwantNewsPicture->type;
+        if (isset($qwantNewsPicture->type)) {
+            $this->type = $qwantNewsPicture->type;
+        }
     }
 
     /**

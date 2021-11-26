@@ -1,46 +1,40 @@
 {% set indicators = "" %}
 {% set inner = "" %}
 {% for item in items %}
-    {% for media in item.medias %}
-        {% set indicators %}
-            {{ indicators }}
-            <button
-                type="button"
-                data-bs-target="#carouselNews"
-                data-bs-slide-to="loop.index"
-                class="{% if loop.first %}active{% endif %}"
-                aria-current="true"
-                aria-label="Slide {{ loop.index }}"></button>
-        {% endset %}
-        {% set inner %}
-            {{ inner }}
-            <div class="carousel-item {% if loop.first %}active{% endif %}">
-                <img src="{{ media.pictureBig.url }}" class="d-block w-100">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5><a class="text-light" href="{{ item.url }}" target="__blank">{{item.title}}</a></h5>
-                    <p>{{ item.shortDescription }}</p>
-                </div>
-            </div>
-        {% endset %}
-    {% endfor %}
+	{% set indicators %}
+	{{ indicators }}
+	<button type="button" data-bs-target="#carouselNews" data-bs-slide-to="{{ loop.index - 1 }}" class="{% if loop.first %}active{% endif %}" aria-current="true" aria-label="Slide {{ loop.index }}"></button>
+	{% endset %}
+	{% set inner %}
+	{{ inner }}
+	<div class="carousel-item {% if loop.first %}active{% endif %}">
+		<img src="{{ item.medias[0].pictureBig.url }}" class="d-block w-100">
+		<div class="carousel-caption d-none d-md-block">
+			<h5>
+				<a class="text-light" href="{{ item.url }}" target="__blank">{{item.title}}</a>
+			</h5>
+			<p>{{ item.shortDescription }}</p>
+		</div>
+	</div>
+	{% endset %}
 {% endfor %}
 <div id="carouselNews" class="carousel slide" data-bs-ride="carousel">
-    {% if withIndicators is defined and withIndicators %}
-        <div class="carousel-indicators">
-            {{ indicators }}
-        </div>
-    {% endif %}
-    <div class="carousel-inner">
-        {{ inner }}
-    </div>
-    {% if withButtons is defined and withButtons %}
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselNews" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselNews" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    {% endif %}
+	{% if withIndicators is defined and withIndicators %}
+		<div class="carousel-indicators">
+			{{ indicators }}
+		</div>
+	{% endif %}
+	<div class="carousel-inner">
+		{{ inner }}
+	</div>
+	{% if withButtons is defined and withButtons %}
+		<button class="carousel-control-prev" type="button" data-bs-target="#carouselNews" data-bs-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Previous</span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#carouselNews" data-bs-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Next</span>
+		</button>
+	{% endif %}
 </div>

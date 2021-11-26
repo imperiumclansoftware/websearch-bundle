@@ -1,8 +1,15 @@
 <?php
+
 namespace ICS\WebsearchBundle\Entity\Qwant\Api;
 
 class QwantItem
 {
+    const TYPE_IMAGE = 'image';
+    const TYPE_WEB = 'web';
+    const TYPE_NEWS = 'news';
+    const TYPE_VIDEO = 'video';
+
+
     protected $type;
     private $title;
     private $url;
@@ -16,11 +23,10 @@ class QwantItem
     {
         $this->title = $qwantResponseItem->title;
         $this->url = $qwantResponseItem->url;
-
-        $this->description = $qwantResponseItem->desc;
+        if (isset($qwantResponseItem->desc)) {
+            $this->description = $qwantResponseItem->desc;
+        }
         $this->id = $qwantResponseItem->_id;
-
-
     }
 
     /**
@@ -61,21 +67,19 @@ class QwantItem
 
     public static function createItemFromResponse($qwantResponseItem)
     {
-        if(property_exists($qwantResponseItem,'favicon'))
-        {
-            return new QwantWebItem($qwantResponseItem);
+        if (property_exists($qwantResponseItem, 'press_name')) {
+            return new QwantNewsItem($qwantResponseItem);
         }
 
-        if(property_exists($qwantResponseItem,'type'))
-        {
-            switch($qwantResponseItem->type)
-            {
-                case 'image' : return new QwantImageItem($qwantResponseItem);
-                case 'video' : return new QwantVideoItem($qwantResponseItem);
-            }
+        if (property_exists($qwantResponseItem, 'thumb_type')) {
+            return new QwantImageItem($qwantResponseItem);
         }
 
-        return new QwantNewsItem($qwantResponseItem);
+        if (property_exists($qwantResponseItem, 'type')) {
+            return new QwantVideoItem($qwantResponseItem);
+        }
+
+        return new QwantWebItem($qwantResponseItem);
     }
 
     /**

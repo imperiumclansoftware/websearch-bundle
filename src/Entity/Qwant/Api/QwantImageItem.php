@@ -1,4 +1,5 @@
 <?php
+
 namespace ICS\WebsearchBundle\Entity\Qwant\Api;
 
 class QwantImageItem extends QwantItem
@@ -20,7 +21,7 @@ class QwantImageItem extends QwantItem
     {
         parent::__construct($qwantResponseItem);
 
-        $this->type = $qwantResponseItem->type;
+        $this->type = QwantItem::TYPE_IMAGE;
         $this->media = $qwantResponseItem->media;
         $this->thumbnail = $qwantResponseItem->thumbnail;
         $this->thumbWidth = (int)$qwantResponseItem->thumb_width;
@@ -28,10 +29,10 @@ class QwantImageItem extends QwantItem
         $this->width = (int)$qwantResponseItem->width;
         $this->height = (int)$qwantResponseItem->height;
         $this->size = (int)$qwantResponseItem->size;
-        $this->b_id = $qwantResponseItem->b_id;
+        // $this->b_id = $qwantResponseItem->b_id;
         $this->mediaFullsize = $qwantResponseItem->media_fullsize;
         $this->thumbType = $qwantResponseItem->thumb_type;
-        $this->count = $qwantResponseItem->count;
+        // $this->count = $qwantResponseItem->count;
         $this->mediaPreview = $qwantResponseItem->media_preview;
     }
 

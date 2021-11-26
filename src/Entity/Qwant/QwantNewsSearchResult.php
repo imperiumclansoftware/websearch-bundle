@@ -1,4 +1,5 @@
 <?php
+
 namespace ICS\WebsearchBundle\Entity\Qwant;
 
 use ICS\WebsearchBundle\Entity\Qwant\Api\QwantNewsItem;
@@ -8,7 +9,7 @@ class QwantNewsSearchResult extends QwantSearchResult
 
     private $date;
     private $domain;
-    private $category;
+    private $pressName;
     private $medias;
     private $shortDescription;
 
@@ -18,7 +19,7 @@ class QwantNewsSearchResult extends QwantSearchResult
 
         $this->date = $item->getDate();
         $this->domain = $item->getDomain();
-        $this->category = $item->getCategory();
+        $this->pressName = $item->getPressName();
         $this->medias = $item->getMedias();
         $this->shortDescription = $item->getShortDescription();
     }
@@ -41,14 +42,6 @@ class QwantNewsSearchResult extends QwantSearchResult
     }
 
     /**
-     * Get the value of category
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    /**
      * Get the value of media
      */
     public function getMedias()
@@ -62,5 +55,10 @@ class QwantNewsSearchResult extends QwantSearchResult
     public function getShortDescription()
     {
         return $this->shortDescription;
+    }
+
+    public function getPressName()
+    {
+        return $this->pressName;
     }
 }

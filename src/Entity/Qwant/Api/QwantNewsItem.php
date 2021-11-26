@@ -1,4 +1,5 @@
 <?php
+
 namespace ICS\WebsearchBundle\Entity\Qwant\Api;
 
 use DateTime;
@@ -8,7 +9,7 @@ class QwantNewsItem extends QwantItem
 
     private $date;
     private $domain;
-    private $category;
+    private $pressName;
     private $medias;
     private $shortDescription;
 
@@ -17,20 +18,20 @@ class QwantNewsItem extends QwantItem
     {
         parent::__construct($qwantResponseItem);
 
-        $this->date=new DateTime();
+        $this->date = new DateTime();
         $this->date->setTimestamp($qwantResponseItem->date);
-
         $this->domain = $qwantResponseItem->domain;
-        $this->category = $qwantResponseItem->category;
-        foreach($qwantResponseItem->media as $media)
-        {
+        $this->pressName = $qwantResponseItem->press_name;
+        foreach ($qwantResponseItem->media as $media) {
             $this->medias[] = new QwantNewsMedia($media);
         }
 
-        $this->shortDescription = $qwantResponseItem->desc_short;
+        if (isset($qwantResponseItem->desc_short)) {
+            $this->shortDescription = $qwantResponseItem->desc_short;
+        }
 
 
-        $this->type = "news";
+        $this->type = QwantItem::TYPE_NEWS;
     }
 
 
@@ -51,13 +52,7 @@ class QwantNewsItem extends QwantItem
         return $this->domain;
     }
 
-    /**
-     * Get the value of category
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
+
 
     /**
      * Get the value of media
@@ -73,5 +68,10 @@ class QwantNewsItem extends QwantItem
     public function getShortDescription()
     {
         return $this->shortDescription;
+    }
+
+    public function getPressName()
+    {
+        return $this->pressName;
     }
 }
